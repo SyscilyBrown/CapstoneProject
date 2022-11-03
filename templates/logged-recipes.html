@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <p> Here are recipes based on your desired {{recipebase}}! </p>
+
+<div id="wrapper">
+    <ol>
+        {% for key, values in storedrecipeinfo.items() %}
+            <li class="list-group-item">
+                <a href='{{values[0]}}'>{{values[1]}}</a>
+                {% if 'user_id' in session %}
+                <form id="{{key}}" class="test-buttons" style="text-align: right">
+                
+                    <button id="{{key}}" class='recipebutton' style="font-size:10px"> Save Recipe <i class="fa fa-heart" style = "color:red"></i>
+                    
+                    </button>
+
+                    
+                </form>
+                
+               
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+</div>
+
+    <script>
+  
+
+        var elements = document.getElementsByClassName("recipebutton");
+        
+
+        var myFunction = function(e) {
+            recipeid=e.target.id;
+            console.log(recipeid);
+            e.preventDefault();
+            jQuery.ajax({
+                type:"POST",
+                dataType:'json',
+                contentType: "application/json",
+                url:"/favoriterecipes",
+                data: JSON.stringify(recipeid)
+            });    
+            
+        };
+
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener('click', myFunction, false);
+        }
+    </script>
+
+
+{% endblock %}
+

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for msg in get_flashed_messages()%}
+    <p class = "alert alert-success"> {{msg}}</p>
+    {% endfor%}
+    <br>
+  
+
+    {% if 'user_id' in session %}
+    Welcome {{name}}!
+  
+    {% endif %}
+    <ul>
+      <li><a href="/enterIngredients">Find Recipes By Ingredients!</a></li>
+      <li><a href="/enterNutrients">Find Recipes By Nutrients!</a></li>
+      {% if 'user_id' in session %}
+      <li><a href="/favoriterecipes">View Stored Recipes!</a></li>
+      {% endif %}
+    </ul>
+
+
+{% endblock %}

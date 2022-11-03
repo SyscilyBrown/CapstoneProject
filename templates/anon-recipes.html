@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p> Here are recipes based on your desired {{recipebase}}! </p>
+
+    <ol>
+
+        {% for key, value in recipes.items() %}
+            <li class="list-group-item">
+                <a href='{{value}}'>{{key}}</a>
+                {% if 'user_id' in session %}
+                <form id='favrecipe' method="POST" action="/favoriterecipes">
+                    <button style="font-size:8px"> Favorite Recipe <i class="fa fa-heart" style = "color:red"></i></button>
+                </form>
+                {% endif %}
+            </li>
+            {% endfor %}
+
+
+    
+
+
+
+    </ol>
+
+    {% if 'user_id' not in session %}
+        <div class="alert alert-light"><a href="/register" class="link-light">Create account</a> or <a href="/login" class="link-light">login</a> to save recipes.</div>
+        {% endif %}
+
+{% endblock %}

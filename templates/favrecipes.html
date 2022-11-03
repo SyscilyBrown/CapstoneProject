@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Favorite Recipes</h1>
+<ul>
+    {% for recipe in favrecipes %}
+    <li> {{recipe.title}}</li>
+    <li> {{recipe.link}} </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
