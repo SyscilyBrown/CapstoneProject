@@ -36,6 +36,7 @@
             recipeid=e.target.id;
             console.log(recipeid);
             e.preventDefault();
+            alert('Recipe Stored!');
             jQuery.ajax({
                 type:"POST",
                 dataType:'json',

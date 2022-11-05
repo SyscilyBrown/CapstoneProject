@@ -54,37 +54,61 @@ def store_fav_recipes():
         except IntegrityError as e:
             db.session.rollback()
             pass
-        flash('Successfully created your account!')
         return favrecipedata
-
     return redirect('/favoriterecipe')
+
+@app.route('/deleterecipe', methods=['POST', 'GET'])
+def delete_recipe():
+    userid=session['user_id']
+
+    if request.method=="POST":
+        try:
+            deletedEntry = request.get_json()
+            todelete=FavoriteRecipe.query.filter_by(recipe_id=deletedEntry, user_id=userid).first()
+        
+            db.session.delete(todelete)
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            pass
+        return deletedEntry
+    return redirect('/favoriterecipe')
+
 
 
 @app.route('/showfavoriterecipes', methods=['POST', 'GET'])
 def view_fav_recipes():
-    """This route will show the user's favorite recipes
-    1. set variable from querying database with particular user in session
-    2. pass to template and get recipe title and link
-    3. copy template for logged recipe but replace with delete button 
-    storedrecipes = db.session.query(FoundRecipe).filter(FoundRecipe.user_id == curr_user_id).order_by(FoundRecipe.id.desc()).limit(5)
-            
-            storedrecipelinks=[]
-            storedrecipetitles=[]
-            storedrecipeids=[]
+ 
+    curr_user_id = session['user_id']
+    favoriterecipes= db.session.query(FavoriteRecipe.recipe_id, 
+    FoundRecipe.title,
+    FoundRecipe.link,
+    FavoriteRecipe.user_id).filter_by(user_id=curr_user_id).join(FavoriteRecipe).all()
+    
 
-            for x in storedrecipes:
-                storedrecipeids.append(x.id)
-                storedrecipelinks.append(x.link)
-                storedrecipetitles.append(x.title)
+    favoriterecipelinks=[]
+    favoriterecipetitles=[]
+    favoriterecipeids=[]
+    
+    for x in favoriterecipes:
+        favoriterecipetitles.append(x.title)
+        favoriterecipelinks.append(x.link)
+        favoriterecipeids.append(x.recipe_id)
 
-            storedrecipeinfo ={k: (v1,v2) for k,v1,v2 in zip(storedrecipeids, storedrecipelinks, storedrecipetitles) }
-            ##this makes dictionary example 146: ('http://link', 'title')
-            print(storedrecipeinfo)
+
+    """
+    favoriterecipes = dict(zip(favoriterecipetitles, favoriterecipelinks))
+    print(favoriterecipes)
     """
 
+    favoriterecipeinfo ={k: (v1,v2) for k,v1,v2 in zip(favoriterecipeids, favoriterecipelinks, favoriterecipetitles) }
+            ##this makes dictionary example 146: ('http://link', 'title')
+    print(favoriterecipeinfo)
+    
+    
     
     userid = session['user_id']
-    return render_template("viewfavoriterecipes.html", userid=userid)
+    return render_template("viewfavoriterecipes.html", favoriterecipeinfo=favoriterecipeinfo)
         
             
 

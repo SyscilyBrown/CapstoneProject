@@ -45,7 +45,7 @@ class User(db.Model):
     username = db.Column(db.String(20), nullable=False, unique = True)
     password = db.Column(db.String, nullable=False)
 
-    savedrecipes=db.relationship('FavoriteRecipe', backref='user')
+    #savedrecipes=db.relationship('FavoriteRecipe', backref='user')
 
     #through relationship reference database, then secondary table name, and the backref so this connets all three
 
