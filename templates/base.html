@@ -8,33 +8,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>You have food at home!</title>
+    <title>Yet's make something out of nothing</title>
 </head>
 <body>
     <nav class="navbar navbar-light bg-primary justify-content-between ">
-        <div class="container">
-          <a href="/" class="navbar-brand text-light">Let's make something out of nothing!</a>
-          <ul class="nav navbar-nav flex-row float-right">
-            <!-- if the user is in session, show link to logout. If not, show login and sign up-->
-            {% if session['user_id'] %}
-            <li class="nav-item">
-              <a class="nav-link pr-3 text-light" href="/logout">Logout</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link pr-3 text-light" href="/showfavoriterecipes">View Stored Recipes</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a class="nav-link pr-3 text-light" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light" href="/register">Sign up</a>
-            </li>
-              
-            {% endif %}
-
-          </ul>
-        </div>
+        
+      <a href="/" class="navbar-brand text-light">Home</a>
+      <ul class="nav navbar-nav flex-row float-right">
+        <!-- if the user is in session, show link to logout. If not, show login and sign up-->
+        {% if session['user_id'] %}
+        <li class="nav-item">
+          <a class="nav-link pr-3 text-light" href="/logout">Logout</a>
+        </li>
+        <li>
+          <a class="nav-link pr-3 text-light" href="/showfavoriterecipes">View Favorite Recipes</a>
+        </li>
+  
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link pr-3 text-light" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="/register">Sign up</a>
+        </li>
+          
+        {% endif %}
+      </ul>
+      
       </nav>
 
     

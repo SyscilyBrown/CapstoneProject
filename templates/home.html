@@ -1,19 +1,62 @@
-{% extends 'base.html' %}
-{% block content %}
-    {% for msg in get_flashed_messages()%}
-    <p class = "alert alert-success"> {{msg}}</p>
-    {% endfor%}
-    <br>
-  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">  
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Let's make something out of nothing</title>
+</head>
+<body>
 
     {% if 'user_id' in session %}
-    Welcome {{name}}!
+    <nav class="navbar navbar-dark bg-primary">
+      <ul class="nav navbar-nav flex-row">
+        <li class="nav-item">
+          <a class="nav-link pr-3 text-light" href="/logout">Logout</a>
+        </li>
+      </ul>
+    </nav>
+    <h1>Welcome back, {{username}}!</h1>
+    <br>
+   
+    <h4>Choose an option below: </h4>
+    <a href="/enterIngredients" class="btn btn-light btn-outline-info ">Find Recipes By Ingredients!</a>
+    <a href="/enterNutrients" class="btn btn-light btn-outline-info ">Find Recipes By Nutrients!</a> 
+    <a href="/showfavoriterecipes" class="btn btn-light btn-outline-info ">View Stored Recipes!</a>   
   
     {% endif %}
-    <ul>
-      <li><a href="/enterIngredients">Find Recipes By Ingredients!</a></li>
-      <li><a href="/enterNutrients">Find Recipes By Nutrients!</a></li>
-    </ul>
 
+    {% if 'user_id' not in session %}
+    <nav class="navbar navbar-dark bg-primary justify-content-between ">
+      <ul class="nav navbar-nav flex-row">
+        <li class="nav-item">
+          <a class="nav-link pr-3 text-light" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link pr-3 text-light" href="/register">Sign up</a>
+        </li>
+      </ul>
+    </nav>
+    <h1>Welcome Guest!</h1>
+    <br>
 
-{% endblock %}
+    <p> Thanks for visiting! Whether you have <a href="/enterNutrients">macronutrient</a> goals, look to utilize specific <a href="/enterIngredients">ingredients</a>, or are just seeking recipe inspiration we can help or you can make something out of nothing! </p>
+    <br>
+
+    <h4>To begin, choose an option below: </h4>
+    <a href="/enterIngredients" class="btn btn-light btn-outline-info ">Find Recipes By Ingredients!</a>
+    <a href="/enterNutrients" class="btn btn-light btn-outline-info ">Find Recipes By Nutrients!</a>
+    <br>
+    <br>
+    <h4>To save recipes or view saved recipes: </h4>
+    <a href="/login" class="btn btn-light btn-outline-info ">Login</a>
+    <a href="/register" class="btn btn-light btn-outline-info ">Register</a>
+  
+    {% endif %}
+
+</body>
+</html>

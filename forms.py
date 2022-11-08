@@ -3,11 +3,11 @@ from wtforms import StringField, RadioField, SelectMultipleField, SelectField,St
 from wtforms.validators import InputRequired, Optional, DataRequired, Email, Length
 
 class RecipeByIngredients(FlaskForm):
-    ingredient1 = StringField("First Ingredient")
-    ingredient2 = StringField("Second Ingredient")
-    ingredient3 = StringField("Third Ingredient")
-    ingredient4 = StringField("Fourth Ingredient", validators=[Optional()])
-    ingredient5 = StringField("Fifth Ingredient", validators=[Optional()])
+    ingredient1 = StringField("Ingredient 1")
+    ingredient2 = StringField("Ingredient 2")
+    ingredient3 = StringField("Ingredient 3")
+    ingredient4 = StringField("Ingredient 4", validators=[Optional()])
+    ingredient5 = StringField("Ingredient 5", validators=[Optional()])
 
 class RecipeByNutrients(FlaskForm):
     minProtein = IntegerField("Minimum Protein? (Required) ")

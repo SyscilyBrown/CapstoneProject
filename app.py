@@ -35,7 +35,8 @@ key = API_SECRET_KEY
 
 @app.route('/')
 def home_page():
-    return render_template('home.html')
+    username = session['user_username']
+    return render_template('home.html', username=username)
 
 
 @app.route('/favoriterecipes', methods=['POST', 'GET'])
@@ -270,54 +271,104 @@ def enter_ingredients():
 @app.route('/enterNutrients', methods = ["GET", "POST"])
 def enter_nutrients(): 
     form = RecipeByNutrients()
+    key = API_SECRET_KEY
 
     if form.validate_on_submit():
-       """Send API request based on user input"""
-       minProtein = form.minProtein.data
-       minCalories = form.minCalories.data
-       maxCalories = form.maxCalories.data
-       minFat = form.minFat.data
-       maxFat = form.maxFat.data
-       maxCarbs = form.maxCarbs.data
-       maxSugar = form.maxSugar.data
-       response = requests.get(f'{BASE_URL}/findByNutrients', params={'apiKey': key, 'minProtein':minProtein, 'minCalories':minCalories, 'maxCalories': maxCalories, 'minFat':minFat,'maxFat': maxFat, 'maxCarbs':maxCarbs, 'maxSugar':maxSugar   })
-       data = response.json()
-      
-       # loop for recipes id
-       recipeid = []
-       for i in data:
-            recipeid.append(int(i['id']))
+        
+        minProtein = form.minProtein.data
+        minCalories = form.minCalories.data
+        maxCalories = form.maxCalories.data
+        minFat = form.minFat.data
+        maxFat = form.maxFat.data
+        maxCarbs = form.maxCarbs.data
+        maxSugar = form.maxSugar.data
+        response = requests.get(f'{BASE_URL}/findByNutrients', params={'apiKey': key, 'minProtein':minProtein, 'minCalories':minCalories, 'maxCalories': maxCalories, 'minFat':minFat,'maxFat': maxFat, 'maxCarbs':maxCarbs, 'maxSugar':maxSugar   })
+        data = response.json()
 
+        # loop for recipes id
+        recipeid = []
+        for i in data:
+             recipeid.append(i['id'])       
+        #Retrieve recipe ids 
+        recipe1 = recipeid[0]
+        recipe2 = recipeid[1]
+        recipe3 = recipeid[2]
+        recipe4 = recipeid[3]
+        recipe5 = recipeid[4]
+        recipeids = (f'{recipe1},{recipe2},{recipe3},{recipe4},{recipe5}')
+        #get recipe details
+        recipedetails = requests.get(f'{BASE_URL}/informationBulk', params = {'apiKey':key, 'ids': recipeids, 'includeNutrition': 'false'})
+        recipedata = recipedetails.json()
 
-       #Retrieve recipe ids 
-       recipe1 = recipeid[0]
-       recipe2 = recipeid[1]
-       recipe3 = recipeid[2]
-       recipe4 = recipeid[3]
-       recipe5 = recipeid[4]
-       recipeids = (f'{recipe1},{recipe2},{recipe3},{recipe4},{recipe5}')
-       #get recipe details
-       recipedetails = requests.get(f'{BASE_URL}/informationBulk', params = {'apiKey':key, 'ids': recipeids, 'includeNutrition': 'false'})
-
-
-       recipedata = recipedetails.json()
-
-       #loop for recipe details 
-       recipetitles=[]
-       recipelinks= []
-       for i in recipedata:
+        #loop for recipe details 
+        recipetitles=[]
+        recipelinks = []
+        recipeimages = []
+        for i in recipedata:
             recipetitles.append(i['title'])
-            recipelinks.append(i['spoonacularSourceUrl'])  
+            recipelinks.append(i['spoonacularSourceUrl'])
+        recipes = dict(zip(recipetitles, recipelinks))
 
-       recipes=dict(zip(recipetitles, recipelinks))
+        if 'user_id' not in session:
+                return render_template('/anon-recipes.html', recipebase = 'ingredients',
+        recipes=recipes)
+
+        curr_user_id = session['user_id']
+        print(curr_user_id)
+
+        if 'user_id' in session:
+            # loop recipes and save to db
+            for key, value in recipes.items():
+                try:
+                    new_entry=FoundRecipe(user_id=curr_user_id, title=key, link=value)
+                    db.session.add(new_entry)
+                    db.session.commit()
+                  
+                
+            
+                except IntegrityError as e:
+                    db.session.rollback()
+                    pass
+                
+
+
+            storedrecipes = db.session.query(FoundRecipe).filter(FoundRecipe.user_id == curr_user_id).order_by(FoundRecipe.id.desc()).limit(5)
+            print(storedrecipes)
+            
+            storedrecipelinks=[]
+            storedrecipetitles=[]
+            storedrecipeids=[]
+
+            for x in storedrecipes:
+                storedrecipeids.append(x.id)
+                storedrecipelinks.append(x.link)
+                storedrecipetitles.append(x.title)
+
+            storedrecipeinfo ={k: (v1,v2) for k,v1,v2 in zip(storedrecipeids, storedrecipelinks, storedrecipetitles) }
+            ##this makes dictionary example 146: ('http://link', 'title')
+            print(storedrecipeinfo)
+
+
+            
+
+
+        return render_template('/logged-recipes.html', recipebase = 'ingredients',
+        recipes=recipes, storedrecipeinfo=storedrecipeinfo, user_id=curr_user_id
+        )
+    else:
+        return render_template("enter_nutrients.html", form=form)
+
+
+       
+
+
+
     
 
-       return render_template('recipes.html',
-       recipebase='nutrients', 
-       recipes = recipes
-       )
-    else:
-        return render_template('enter_nutrients.html', form=form)
+
+
+
+
 
     
 

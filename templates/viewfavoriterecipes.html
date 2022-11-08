@@ -1,6 +1,26 @@
-{% extends 'base.html' %}
-{% block content %}
-    <p> Here are your favorite recipes! </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">  
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Let's make something out of nothing</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-primary">
+        <div class="container" class="float-left">
+          <a href="/" class="navbar-brand text-light">Home</a>
+            <ul class="nav navbar-nav flex-row float-right">
+            <!-- if the user is in session, show link to logout. If not, show login and sign up-->
+                <li class="nav-item">
+              <a class="nav-link pr-3 text-light" href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <h3>Your Favorite Recipes:</h3>
 
     <ol>
 
@@ -54,5 +74,6 @@
 
 
 
-{% endblock %}
 
+</body>
+</html>

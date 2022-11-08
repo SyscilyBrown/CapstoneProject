@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>What do you already have in your fridge?</h1>
-    <form action="/enterIngredients" method="POST">
-        {{ form.hidden_tag() }}
-        {% for field in form if field.widget.input_type != 'hidden'%}
-        <p>
-          {{field.label}}
-          {{field}}
-    
-          {% for err in field.errors %}
-          {{err}}
-          {% endfor %}
-        </p>
-        {% endfor %}
-        <button>Submit</button>
-    </form>
+
+<h3>What ingredient(s) would you like to use?</h3>
+<form action="/enterIngredients" method="POST">
+    {{ form.hidden_tag() }}
+    {% for field in form if field.widget.input_type != 'hidden'%}
+    <p>
+      {{field.label}}
+      {{field}}
+
+      {% for err in field.errors %}
+      {{err}}
+      {% endfor %}
+    </p>
+    {% endfor %}
+    <button class="btn btn-success">Submit</button>
+</form>
 
 {% endblock %}
