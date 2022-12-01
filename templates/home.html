@@ -1,62 +1,188 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Let's make something out of nothing</title>
+    <style> body{background-image: url('https://img.freepik.com/premium-photo/food-cooking-background-stone-texture-with-sea-salt-pepper-garlic-parsley-light-grey-abstract-food-background-empty-space-text-can-be-used-food-posters-design-menu-top-view_253362-16400.jpg?w=2000');}</style>
 </head>
 <body>
 
     {% if 'user_id' in session %}
-    <nav class="navbar navbar-dark bg-primary">
-      <ul class="nav navbar-nav flex-row">
-        <li class="nav-item">
-          <a class="nav-link pr-3 text-light" href="/logout">Logout</a>
-        </li>
-      </ul>
-    </nav>
-    <h1>Welcome back, {{username}}!</h1>
-    <br>
-   
-    <h4>Choose an option below: </h4>
-    <a href="/enterIngredients" class="btn btn-light btn-outline-info ">Find Recipes By Ingredients!</a>
-    <a href="/enterNutrients" class="btn btn-light btn-outline-info ">Find Recipes By Nutrients!</a> 
-    <a href="/showfavoriterecipes" class="btn btn-light btn-outline-info ">View Stored Recipes!</a>   
-  
+      <nav class="navbar navbar-dark bg-primary">
+        <ul class="nav navbar-nav flex-row">
+          <li class="nav-item">
+            <a class="nav-link pr-3 text-light" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </nav>
+      <h1 text-align="center">Welcome, {{username}}!</h1>
+      <br>
+      <div class="text-center">
+      <h4> Choose an option below: </h4>
+      
+      <a href="/enterIngredients" class="btn btn-light btn-outline-info">Find Recipes By Ingredients!</a>
+      <a href="/enterNutrients" class="btn btn-light btn-outline-info ">Find Recipes By Nutrients!</a> 
+      <a href="/showfavoriterecipes" class="btn btn-light btn-outline-info ">View Stored Recipes!</a>   
+      </div>
     {% endif %}
 
     {% if 'user_id' not in session %}
-    <nav class="navbar navbar-dark bg-primary justify-content-between ">
-      <ul class="nav navbar-nav flex-row">
-        <li class="nav-item">
-          <a class="nav-link pr-3 text-light" href="/login">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link pr-3 text-light" href="/register">Sign up</a>
-        </li>
-      </ul>
-    </nav>
-    <h1>Welcome Guest!</h1>
-    <br>
+      <nav class="navbar navbar-dark bg-primary justify-content-between ">
+        <ul class="nav navbar-nav flex-row">
+          <li class="nav-item">
+            <a class="nav-link pr-3 text-light" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link pr-3 text-light" href="/register">Sign up</a>
+          </li>
+        </ul>
+      </nav>
 
-    <p> Thanks for visiting! Whether you have <a href="/enterNutrients">macronutrient</a> goals, look to utilize specific <a href="/enterIngredients">ingredients</a>, or are just seeking recipe inspiration we can help or you can make something out of nothing! </p>
-    <br>
 
-    <h4>To begin, choose an option below: </h4>
-    <a href="/enterIngredients" class="btn btn-light btn-outline-info ">Find Recipes By Ingredients!</a>
-    <a href="/enterNutrients" class="btn btn-light btn-outline-info ">Find Recipes By Nutrients!</a>
-    <br>
-    <br>
-    <h4>To save recipes or view saved recipes: </h4>
-    <a href="/login" class="btn btn-light btn-outline-info ">Login</a>
-    <a href="/register" class="btn btn-light btn-outline-info ">Register</a>
+      <h1 text-align="center" >Welcome Guest!</h1>
+      <br>
+
+      <p> Thanks for visiting! Whether you have <a href="/enterNutrients">macronutrient</a> goals,<br> look to utilize specific <a href="/enterIngredients">ingredients</a>, or are just seeking <br>recipe inspiration we can help or you can make something out of nothing! <br>In order to save recipes, you must <a href="/login" >login</a> or <a href="/register" >create an account</a>.</p>
+    
+      <br>
+      <div class="mx-auto" style="width: 200px;">
+
+      <h4>To begin, choose an option below: </h4>
+      </div>
+      <div class="mx-auto justify-content-between" style="width: 200px;">
+      <a href="/enterIngredients" class="btn btn-light btn-outline-info ">Find Recipes By Ingredients!</a>
+      <a href="/enterNutrients" class="btn btn-light btn-outline-info ">Find Recipes By Nutrients!</a>
+      </div>
+      <br>
+      <br>
+   
+    
+    
   
     {% endif %}
+<footer class="text-center text-lg-start text-white" style="background-color: #1c2331; position:absolute; bottom: 0;  width: 100%;">
+<!-- Section: Social media -->
+<section
+       class="d-flex justify-content-between p-4"
+       style="background-color: #6351ce;"
+       >
+<!-- Left -->
+<div class="me-5">
+  <span>Get connected with me on social networks:</span>
+</div>
+<!-- Left -->
 
+<!-- Right -->
+<div>
+
+  <a href="https://twitter.com/_TheSysSTEM" class="text-white me-4">
+    <i class="fab fa-twitter"></i>
+  </a>
+
+  <a href="https://www.linkedin.com/in/syscilybrown/" class="text-white me-4">
+    <i class="fab fa-linkedin"></i>
+  </a>
+  <a href="https://github.com/SyscilyBrown" class="text-white me-4">
+    <i class="fab fa-github"></i>
+  </a>
+</div>
+<!-- Right -->
+</section>
+<!-- Section: Social media -->
+
+<!-- Section: Links  -->
+<section class="">
+<div class="container text-center text-md-start mt-5">
+  <!-- Grid row -->
+  <div class="row mt-3">
+    <!-- Grid column -->
+    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+      <!-- Content -->
+      <h6 class="text-uppercase fw-bold">About</h6>
+      <hr
+          class="mb-4 mt-0 d-inline-block mx-auto"
+          style="width: 60px; background-color: #7c4dff; height: 2px"
+          />
+      <p>
+        I created this app using Python, JavaScript, SQLAlchemy, AJAX, and Flask. I used the <a href="https://spoonacular.com/food-api/docs">Spoonacular API</a> to generate each recipe.
+      </p>
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+      <!-- Links -->
+      <h6 class="text-uppercase fw-bold">Tools</h6>
+      <hr
+          class="mb-4 mt-0 d-inline-block mx-auto"
+          style="width: 60px; background-color: #7c4dff; height: 2px"
+          />
+      <p>
+        <a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/" class="text-white">MDBootstrap</a>
+      </p>
+      <p>
+        <a href="https://fontawesome.com/" class="text-white">Font Awesome</a>
+      </p>
+     
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+      <!-- Links -->
+      <h6 class="text-uppercase fw-bold">Useful links</h6>
+      <hr
+          class="mb-4 mt-0 d-inline-block mx-auto"
+          style="width: 60px; background-color: #7c4dff; height: 2px"
+          />
+      <p>
+        <a href="/enterIngredients" class="text-white">Find Recipes By Ingredients</a>
+      </p>
+      <p>
+        <a href="/enterNutrients" class="text-white">Find Recipes By Nutrients</a>
+      </p>
+      <p>
+        <a href="/showfavoriterecipes" class="text-white">View Favorite Recipes</a>
+      </p>
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+      <!-- Links -->
+      <h6 class="text-uppercase fw-bold">Contact</h6>
+      <hr
+          class="mb-4 mt-0 d-inline-block mx-auto"
+          style="width: 60px; background-color: #7c4dff; height: 2px"
+          />
+      <p><i class="fas fa-home mr-3"></i> Washington, DC</p>
+      <p><i class="fas fa-envelope mr-3"></i> syscily.brown@gmail.com</p>
+      <p><i class="fas fa-regular fa-file mr-3"></i> <a href="https://drive.google.com/file/d/1qQmKryjhvo6OUWB-NM8NObHlSzUJZCgP/view?usp=sharing">  Resume</a></p>
+    </div>
+    <!-- Grid column -->
+  </div>
+  <!-- Grid row -->
+</div>
+</section>
+<!-- Section: Links  -->
+
+<!-- Copyright -->
+<div
+   class="text-center p-3"
+   style="background-color: rgba(0, 0, 0, 0.2)"
+   >
+© 2022 Copyright:
+<a class="text-white" href="https://mdbootstrap.com/"
+   >Syscily Brown</a
+  >
+</div>
+<!-- Copyright -->
+</footer>
 </body>
 </html>

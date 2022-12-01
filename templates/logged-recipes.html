@@ -1,49 +1,68 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
 
+<h3 style="text-align:center;">Recipe Options: </h3>
 
-<div id="wrapper">
-    <ol>
-        {% for key, values in storedrecipeinfo.items() %}
-            <li class="list-group-item">
-                <a href='{{values[0]}}'>{{values[1]}}</a>
-                {% if 'user_id' in session %}
-                <form id="{{key}}" class="test-buttons" style="text-align: right">
-                
-                    <button id="{{key}}" class='recipebutton' style="font-size:10px"> Save Recipe <i class="fa fa-heart" style = "color:red"></i>
-                    
-                    </button>
+<div class="row row-cols-1 row-cols-md-5 g-4">
 
-                    
-                </form>
-                
-               
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ol>
+{% for key, values in storedrecipeinfo.items() %}
+    <div class="col">
+        <div class="card text-center" class="card-body">
+        <div>
+            <h6 class="card-title" style="height:26px"><a href='{{values[0]}}'> {{values[1]}}</a></h6>
+        </div>  
+        <div>
+            <img src ="{{values[2]}}" class="img-thumbnail" style="height:250px;width:400px" >
+        </div>
+        
+            <form id="changebutton" class="test-buttons" style="text-align: center">
+                <button id="{{key}}" class='recipebutton' style="font-size:10px"> Save Recipe <i class="fa fa-heart" style = "color:red"></i>
+                </button>            
+            </form>
+            <div class="card-footer">
+                <small class="text-muted"> Ready In: {{values[3]}} minutes</small>
+
+            </div>
+        </div>
+    </div>
+             
+{% endfor %}
 </div>
 
+
     <script>
+        var elements = document.getElementsByClassName("recipebutton");   
   
 
-        var elements = document.getElementsByClassName("recipebutton");
-        
 
         var myFunction = function(e) {
             recipeid=e.target.id;
             console.log(recipeid);
             e.preventDefault();
+            
             alert('Recipe Stored!');
+            console.log("ADD LOADING HERE ")
+            
+        
+            
             jQuery.ajax({
                 type:"POST",
                 dataType:'json',
                 contentType: "application/json",
                 url:"/favoriterecipes",
                 data: JSON.stringify(recipeid)
-            });    
+            }).done(()=>{
+                const element = document.getElementById(recipeid)
+                console.log(element)
+                console.log(element.innerHTML)
+                
+                element.innerHTML="Recipe  Saved! <i class='fa fa-heart' style='color:green'></i>"
+
+
+            }
+            );    
+
             
         };
 
@@ -54,4 +73,5 @@
 
 
 {% endblock %}
+
 

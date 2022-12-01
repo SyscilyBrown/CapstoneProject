@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% for msg in get_flashed_messages()%}
+<p> {{msg}}</p>
+{% endfor%}
+<div class="text-center">
 <h3>What ingredient(s) would you like to use?</h3>
 <form action="/enterIngredients" method="POST">
     {{ form.hidden_tag() }}
     {% for field in form if field.widget.input_type != 'hidden'%}
     <p>
+      
       {{field.label}}
       {{field}}
 
@@ -16,5 +20,9 @@
     {% endfor %}
     <button class="btn btn-success">Submit</button>
 </form>
+</div>
+<br>
+
+
 
 {% endblock %}

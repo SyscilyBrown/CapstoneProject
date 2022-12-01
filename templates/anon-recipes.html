@@ -2,28 +2,27 @@
 {% block content %}
     
 
-    <ol>
+  
+<div class="card-group">
+{% for key, values in recipes.items() %}
+        <div class="card text-center" class="card-body" style="width: fit-content">
+        <div>
+            <h6 class="card-title" style="height:26px"> {{key}}</h6>
+        </div>    
+        <div>
+            <img src ="{{values[1]}}" class="img-thumbnail" style="height:250px;width:400px" >
+        </div>
+            <a href="{{values[0]}}" class = "btn btn-success"> View Recipe</a>
+        <div class="card-footer">
+            <small class="text-muted">Ready In: {{values[2]}} minutes</small>
+            </div>
+        </div>       
+{% endfor %}
+</div>
+<br>
+<br>
 
-        {% for key, value in recipes.items() %}
-            <li class="list-group-item">
-                <a href='{{value}}'>{{key}}</a>
-                {% if 'user_id' in session %}
-                <form id='favrecipe' method="POST" action="/favoriterecipes">
-                    <button style="font-size:8px"> Favorite Recipe <i class="fa fa-heart" style = "color:red"></i></button>
-                </form>
-                {% endif %}
-            </li>
-            {% endfor %}
 
-
-    
-
-
-
-    </ol>
-
-    {% if 'user_id' not in session %}
-        <div class="alert alert-light"><a href="/register" class="link-light">Create account</a> or <a href="/login" class="link-light">login</a> to save recipes.</div>
-        {% endif %}
+</div>
 
 {% endblock %}

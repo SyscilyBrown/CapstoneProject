@@ -72,6 +72,9 @@ class FoundRecipe(db.Model):
     user_id  = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='cascade'))
     title= db.Column(db.String, nullable = False, unique = True)
     link=db.Column(db.String, nullable=False)
+    image=db.Column(db.String, nullable=False)
+    cooktime=db.Column(db.String, nullable=False)
+    
 
     savedrecipes=db.relationship('FavoriteRecipe', backref='foundrecipes')
 

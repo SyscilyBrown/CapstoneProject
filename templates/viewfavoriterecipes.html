@@ -1,71 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">  
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>Let's make something out of nothing</title>
-</head>
-<body>
-    <nav class="navbar navbar-light bg-primary">
-        <div class="container" class="float-left">
-          <a href="/" class="navbar-brand text-light">Home</a>
-            <ul class="nav navbar-nav flex-row float-right">
-            <!-- if the user is in session, show link to logout. If not, show login and sign up-->
-                <li class="nav-item">
-              <a class="nav-link pr-3 text-light" href="/logout">Logout</a></li>
-            </ul>
-        </div>
-    </nav>
-    <h3>Your Favorite Recipes:</h3>
+{% extends 'base.html' %}
+{% block content %}
+    
 
-    <ol>
+    <h3 style="text-align:center;">Your Favorite Recipes:</h3>
 
+
+    <div class="row row-cols-1 row-cols-md-5 g-4" >
         {% for key, values in favoriterecipeinfo.items() %}
+        <div class="col">
 
-            <li id='remove-me' class="list-group-item">
-                <a href='{{values[0]}}'>{{values[1]}}</a>
-                {% if 'user_id' in session %}
-                <form id='{{key}}' method="POST" action="/favoriterecipes" class="removebutton" style="text-align: right">
-                    <button id="{{key}}" style="font-size:8px"> Delete Recipe <i class="fa fa-thumbs-down" style = "color:black"></i></button>
-                </form>
-                {% endif %}
-            </li>
-            {% endfor %}
-
-    </ol>
+                <div class="card text-center" class="card-body" style="width: fit-content; height:fit-content; " >
+                <div>
+                    <h6 class="card-title" style="height:26px"><a href='{{values[0]}}'> {{values[1]}}</a></h6>
+                </div>  
+                <div>
+                    <img src ="{{values[2]}}" class="img-thumbnail" style="height:250px;width:400px" >
+                </div>
+                    <form id="liveToastBtn" method="POST" action="/favoriterecipes" class="removebutton" style="text-align: center" >
+                        <button id="{{key}}" style="font-size:8px" > Delete Recipe <i class="fa fa-thumbs-down" style = "color:black"></i></button>            
+                    </form>
+                    <div class="card-footer">
+                        <small class="text-muted"> Ready In: {{values[3]}} minutes</small>
+        
+                    </div>
+                </div>
+        
+        </div>          
+        {% endfor %}
+      </div>
+    
 
     <script>
-        var elements = document.getElementsByClassName("removebutton");
-        var li = document.getElementsByClassName("list-group-item");
-        var itemToRemove=document.querySelector('#remove-me')
-
-        
+        var elements = document.getElementsByClassName("removebutton"); 
 
         var myFunction = function(e) {
             
             recipeid=e.target.id;
             console.log(recipeid);
             e.preventDefault();
+      
             
-            
-            
-            
-
             jQuery.ajax({
-                type:"POST",
-                dataType:'json',
-                contentType: "application/json",
-                url:"/deleterecipe",
-                data: JSON.stringify(recipeid)
-            });  
-            $(this).closest('li').remove();
-            alert('Recipe Removed!');  
+              type:"POST",
+              dataType:'json',
+              contentType: "application/json",
+              url:"/deleterecipe",
+              data: JSON.stringify(recipeid),
             
+            });  
+            $(this).closest('div').remove();
+            alert('Recipe Removed!');  
         };
+        
+      
 
         for (var i = 0; i < elements.length; i++) {
             elements[i].addEventListener('click', myFunction, false);
@@ -74,6 +61,4 @@
 
 
 
-
-</body>
-</html>
+{% endblock %}

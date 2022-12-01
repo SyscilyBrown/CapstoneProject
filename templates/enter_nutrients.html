@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+{% for msg in get_flashed_messages()%}
+<p class="alert alert-danger"> {{msg}}</p>
+{% endfor%}
 
 <h1>What nutrients<font size="-1">(g)</font> do you need? </h1>
 <form action="/enterNutrients" method="POST">
@@ -12,6 +15,7 @@
       {% for err in field.errors %}
       {{err}}
       {% endfor %}
+      
     </p>
     {% endfor %}
     <button class="btn btn-success">Submit</button>
